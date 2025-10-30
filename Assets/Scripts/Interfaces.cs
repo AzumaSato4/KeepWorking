@@ -1,0 +1,51 @@
+using UnityEngine;
+
+public interface IMovable
+{
+    void Move();
+}
+
+public interface ITurnable
+{
+    void TurnLeft();
+    void TurnRight();
+}
+
+public interface IAttackable
+{
+    float Strength { get; }
+    float Dexterity { get; } //器用さ
+    float CoolTime { get; }
+
+    void Attack(IDamageable target);
+}
+
+public interface IDamageable
+{
+    float Health { get; }
+    float Defense { get; }
+
+    void TakeDamage(IAttackable attack);
+    void Dead();
+    void RestoreHealth();
+}
+
+public interface ICreatable
+{
+    void Create();
+}
+
+public interface IShotable
+{
+    float ShotSpeed { get; }
+    float ShotRotation { get; }
+
+    void Shot(GameObject bullet);
+}
+
+public interface IProduct
+{
+    string ProductName { get; }
+
+    void Initialize();
+}
