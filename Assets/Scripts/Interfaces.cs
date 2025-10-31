@@ -47,5 +47,5 @@ public interface IProduct
 {
     string ProductName { get; }
 
-    void Initialize();
+    void Initialize(int id);
 }

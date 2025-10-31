@@ -14,10 +14,9 @@ public class PlayerAttack : MonoBehaviour, IAttackable
 
     private void Start()
     {
-        PlayerStatus status = GetComponentInParent<PlayerStatusHolder>().MainStatus;
-        _strength = status.Strength;
-        _coolTime = status.CoolTime;
-        _dexterity = status.Dexterity;
+        _strength = CSVDataBase.playerStatus.Strength;
+        _coolTime = CSVDataBase.playerStatus.CoolTime;
+        _dexterity = CSVDataBase.playerStatus.Dexterity;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -15,16 +15,14 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
     [SerializeField] Rigidbody2D _rbody;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _attackRenge;
-    [SerializeField] float _defSize;
+    [SerializeField] float _defSize = 6;
     [SerializeField] float _moveSpeed;
     Vector2 _moveInput;
     Vector2 _rotation = Vector2.right;
 
     private void Start()
     {
-        PlayerStatus status = GetComponent<PlayerStatusHolder>().MainStatus;
-        _defSize = status.DefSize;
-        _moveSpeed = status.MoveSpeed;
+        _moveSpeed = CSVDataBase.playerStatus.MoveSpeed;
     }
 
     private void Update()

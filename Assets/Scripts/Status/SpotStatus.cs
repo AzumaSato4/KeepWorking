@@ -1,24 +1,19 @@
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "SpotStatus", menuName = "Status/Spot")]
-public class SpotStatus : ScriptableObject
+public class SpotStatus
 {
-    [Header("耐久値")]
-    [SerializeField] float maxHealth = 10;
-    public float MaxHealth => maxHealth;
-    [Header("硬さ")]
-    [SerializeField] float defense = 10;
-    public float Defense => defense;
-    [Header("回復までの時間")]
-    [SerializeField] float recoverTime = 10;
-    public float RecoverTime => recoverTime;
-    [Header("回復量")]
-    [SerializeField] float recoverPower = 10;
-    public float RecoverPower => recoverPower;
-    [Header("オブジェクト名")]
-    [SerializeField] string productionName;
-    public string ProductionName => productionName;
-    [Header("タイプ")]
-    [SerializeField] Resource.ResourceType spotType;
-    public Resource.ResourceType SpotType => spotType;
+    public string ProductName { get; } //名前
+    public Resource.ResourceType SpotType { get; } //タイプ
+    public float MaxHealth { get; } = 10; //耐久値
+    public float Defense { get; } = 10; //硬さ
+    public float RecoverTime { get; } = 10; //回復までの時間
+    public float RecoverPower { get; } = 10; //回復量
+
+    public SpotStatus(string productName, Resource.ResourceType spotType, float maxHealth, float defense, float recoverTime, float recoverPower)
+    {
+        ProductName = productName;
+        SpotType = spotType;
+        MaxHealth = maxHealth;
+        Defense = defense;
+        RecoverTime = recoverTime;
+        RecoverPower = recoverPower;
+    }
 }

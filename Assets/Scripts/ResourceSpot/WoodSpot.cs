@@ -3,13 +3,8 @@ using UnityEngine.UI;
 
 public class WoodSpot : ResourceSpot
 {
-    [SerializeField] SpotStatus status;
     [SerializeField] Slider slider;
 
-    private void Awake()
-    {
-        spotStatus = status;
-    }
     private void Update()
     {
         slider.maxValue = _maxHealth;

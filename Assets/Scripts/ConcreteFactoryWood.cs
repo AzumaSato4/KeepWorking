@@ -19,7 +19,7 @@ public class ConcreteFactoryWood : Factory
        position, Quaternion.identity);
         Wood newProduct = instance.GetComponent<Wood>();
         // 各製品に独自のロジックが含まれる
-        newProduct.Initialize();
+        newProduct.Initialize(0); //テスト用「0」
         return newProduct;
     }
 }

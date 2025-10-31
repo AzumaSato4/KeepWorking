@@ -2,30 +2,31 @@ using UnityEngine;
 
 public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable
 {
-    protected SpotStatus spotStatus;
+    SpotStatus spotStatus;
+    protected string _productName;
+    protected Resource.ResourceType _spotType;
     protected float _maxHealth;
     protected float _health;
     protected float _defense;
     protected float _timer = 0; //攻撃されていない時間を計測
     protected float _recoverTime; //回復開始までの時間
     protected float _recoverPower; //回復量
-    protected Resource.ResourceType _spotType;
-    protected string _productName;
     public float Health => _health;
     public float Defense => _defense;
     public Resource.ResourceType SpotType => _spotType;
     public string ProductName => _productName;
 
-    public void Initialize()
+    public void Initialize(int id)
     {
+        spotStatus = CSVDataBase.spotStatus[id];
+        _productName = spotStatus.ProductName;
+        _spotType = spotStatus.SpotType;
+        gameObject.name = _productName;
         _maxHealth = spotStatus.MaxHealth;
         _health = _maxHealth;
         _defense = spotStatus.Defense;
         _recoverTime = spotStatus.RecoverTime;
         _recoverPower = spotStatus.RecoverPower;
-        _productName = spotStatus.ProductionName;
-        _spotType = spotStatus.SpotType;
-        gameObject.name = _productName;
     }
     
     private void Update()

@@ -21,7 +21,7 @@ public class ResourceSpotFactory : Factory
        position, Quaternion.identity);
         ResourceSpot newProduct = instance.GetComponent<ResourceSpot>();
         // 各製品に独自のロジックが含まれる
-        newProduct.Initialize();
+        newProduct.Initialize(rand);
         return newProduct;
     }
 }

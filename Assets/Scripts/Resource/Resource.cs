@@ -6,7 +6,7 @@ public abstract class Resource : MonoBehaviour, IProduct
     {
         wood,
         stone,
-        metal
+        gold
     }
 
     protected string _productName;
@@ -14,5 +14,5 @@ public abstract class Resource : MonoBehaviour, IProduct
     protected ResourceType type;
     public ResourceType Type { get => type; }
 
-    public abstract void Initialize();
+    public abstract void Initialize(int id);
 }
