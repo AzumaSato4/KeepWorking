@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < 30; i++)
         {
-            resourceSpotFactory.GenerateSpots();
+            resourceSpotFactory.GenerateSpot();
         }
     }
 }

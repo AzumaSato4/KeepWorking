@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class CSVReader : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         ReadPlayerData();
         ReadSpotData();
+        ReadEnemyData();
+        ReadTurretData();
     }
 
     void ReadPlayerData()
@@ -83,6 +85,97 @@ public class CSVReader : MonoBehaviour
 
                 CSVDataBase.spotStatus.Add(
                     new SpotStatus(productName, type, maxHealth, defense, recoverTime, recoverPower)
+                    );
+            }
+        }
+        else
+        {
+            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
+        }
+    }
+
+    void ReadEnemyData()
+    {
+        // StreamingAssetsフォルダのCSVファイルパスを取得
+        string filePath = Path.Combine(Application.streamingAssetsPath, "EnemyData.csv");
+
+        // ファイルを読み込む
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                string[] values = line.Split(',');
+
+                // ヘッダー行（最初の行）はスキップ
+                if (values[0] == "Name") continue;
+
+                string productName = values[0];
+                string enemyType = values[1];
+                float moveSpeed = float.Parse(values[2]);
+                float maxHealth = float.Parse(values[3]);
+                float defense = float.Parse(values[4]);
+                float strength = float.Parse(values[5]);
+                float coolTime = float.Parse(values[6]);
+                float dexterity = float.Parse(values[7]);
+                Debug.Log($"{productName},{enemyType},{moveSpeed},{maxHealth},{defense},{strength},{coolTime},{dexterity}");
+
+                Enemy.EnemyType type = Enemy.EnemyType.goblin;
+                switch (enemyType)
+                {
+                    case "goblin":
+                        type = Enemy.EnemyType.goblin;
+                        break;
+                }
+
+                CSVDataBase.enemyStatus.Add(
+                    new EnemyStatus(productName, type, moveSpeed, maxHealth, defense, strength, coolTime, dexterity)
+                    );
+            }
+        }
+        else
+        {
+            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
+        }
+    }
+
+    void ReadTurretData()
+    {
+        // StreamingAssetsフォルダのCSVファイルパスを取得
+        string filePath = Path.Combine(Application.streamingAssetsPath, "TurretData.csv");
+
+        // ファイルを読み込む
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                string[] values = line.Split(',');
+
+                // ヘッダー行（最初の行）はスキップ
+                if (values[0] == "Name") continue;
+
+                string productName = values[0];
+                string turretType = values[1];
+                float maxHealth = float.Parse(values[2]);
+                float defense = float.Parse(values[3]);
+                float strength = float.Parse(values[4]);
+                float coolTime = float.Parse(values[5]);
+                float dexterity = float.Parse(values[6]);
+                Debug.Log($"{productName},{turretType},{maxHealth},{defense},{strength},{coolTime},{dexterity}");
+
+                Turret.TurretType type = Turret.TurretType.bow;
+                switch (turretType)
+                {
+                    case "goblin":
+                        type = Turret.TurretType.bow;
+                        break;
+                }
+
+                CSVDataBase.turretStatus.Add(
+                    new TurretStatus(productName, type, maxHealth, defense, strength, coolTime, dexterity)
                     );
             }
         }

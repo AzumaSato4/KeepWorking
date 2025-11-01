@@ -9,10 +9,9 @@ public abstract class Resource : MonoBehaviour, IProduct
         gold
     }
 
-    protected string _productName;
-    public string ProductName { get => _productName; }
-    protected ResourceType type;
-    public ResourceType Type { get => type; }
-
+    string _productName;
+    public string ProductName => _productName;
+    ResourceType type;
+    public ResourceType Type => type;
     public abstract void Initialize(int id);
 }

@@ -10,15 +10,19 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
         attack
     }
 
-    PlayerState currentState = PlayerState.idle;
+    PlayerState _currentState = PlayerState.idle;
 
     [SerializeField] Rigidbody2D _rbody;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _attackRenge;
+    [SerializeField] GameObject _interactiveRenge;
+    [SerializeField] GameObject _createCursor;
     [SerializeField] float _defSize = 6;
-    [SerializeField] float _moveSpeed;
+    float _moveSpeed;
     Vector2 _moveInput;
     Vector2 _rotation = Vector2.right;
+
+    public float MoveSpeed => _moveSpeed;
 
     private void Start()
     {
@@ -27,7 +31,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
 
     private void Update()
     {
-        if (currentState == PlayerState.attack)
+        if (_currentState == PlayerState.attack)
         {
             _rbody.linearVelocityX = 0;
             PlayAnimation();
@@ -59,14 +63,14 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
 
     public void ChangeState(PlayerState nextState)
     {
-        if (currentState == nextState) return;
+        if (_currentState == nextState) return;
         EndState();
-        currentState = nextState;
+        _currentState = nextState;
     }
 
     void EndState()
     {
-        switch (currentState)
+        switch (_currentState)
         {
             case PlayerState.move:
                 _animator.SetBool("isMove", false);
@@ -79,7 +83,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
 
     void PlayAnimation()
     {
-        switch (currentState)
+        switch (_currentState)
         {
             case PlayerState.move:
                 _animator.SetBool("isMove", true);
@@ -89,6 +93,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
                 break;
         }
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
@@ -105,14 +110,12 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
     {
         _rotation = Vector2.left;
         transform.localScale = new Vector2(_rotation.x, 1) * _defSize;
-        _attackRenge.transform.position = new Vector2(transform.position.x - 1.0f, transform.position.y);
     }
 
     public void TurnRight()
     {
         _rotation = Vector2.right;
         transform.localScale = new Vector2(_rotation.x, 1) * _defSize;
-        _attackRenge.transform.position = new Vector2(transform.position.x + 1.0f, transform.position.y);
     }
 
     public void OnAttack(InputAction.CallbackContext context)

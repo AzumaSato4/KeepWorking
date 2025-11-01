@@ -2,6 +2,8 @@ using UnityEngine;
 
 public interface IMovable
 {
+    float MoveSpeed { get; }
+
     void Move();
 }
 
@@ -27,6 +29,10 @@ public interface IDamageable
 
     void TakeDamage(IAttackable attack);
     void Dead();
+}
+
+public interface IRestoreHealth
+{
     void RestoreHealth();
 }
 
