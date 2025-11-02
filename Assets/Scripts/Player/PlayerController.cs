@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable, 
     private void Start()
     {
         _moveSpeed = CSVDataBase.playerStatus.MoveSpeed;
+
+        //カーソルを非表示
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()

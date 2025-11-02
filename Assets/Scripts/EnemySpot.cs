@@ -3,18 +3,20 @@ using UnityEngine;
 public class EnemySpot : Factory
 {
     [SerializeField] Enemy[] _productPrefab;
-    float _generateTime = 2; //生成間隔
+    [SerializeField] AnimationCurve _generateTime; //生成間隔
+    float _generateTimer; //生成間隔
     float _timer;
 
     private void Update()
     {
-        if (_timer >= _generateTime)
+        if (_timer >= _generateTimer)
         {
             _timer = 0;
             GetProduct(transform.position);
         }
 
         _timer += Time.deltaTime;
+        _generateTimer = _generateTime.Evaluate(Time.time);
     }
 
     public override IProduct GetProduct(Vector3 position)
