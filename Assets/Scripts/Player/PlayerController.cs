@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IMovable, ITurnable
+public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
 {
     public enum PlayerState
     {
@@ -12,15 +12,18 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
 
     PlayerState _currentState = PlayerState.idle;
 
+    [SerializeField] BulletFactory _bulletFactory;
     [SerializeField] Rigidbody2D _rbody;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _attackRenge;
-    [SerializeField] GameObject _interactiveRenge;
-    [SerializeField] GameObject _createCursor;
+    [SerializeField] GameObject _interactiveCursor;
     [SerializeField] float _defSize = 6;
+    [SerializeField] float _bowCoolTime = 0.2f;
     float _moveSpeed;
     Vector2 _moveInput;
     Vector2 _rotation = Vector2.right;
+    bool isBowAttack; //弓攻撃中かどうか
+    float _timer;
 
     public float MoveSpeed => _moveSpeed;
 
@@ -54,11 +57,17 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
         else
         {
             _rbody.linearVelocityX = 0;
-                ChangeState(PlayerState.idle);
+            ChangeState(PlayerState.idle);
         }
 
-
         PlayAnimation();
+
+        if (isBowAttack && _timer >= _bowCoolTime)
+        {
+            _timer = 0;
+            Create();
+        }
+        _timer += Time.deltaTime;
     }
 
     public void ChangeState(PlayerState nextState)
@@ -118,7 +127,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
         transform.localScale = new Vector2(_rotation.x, 1) * _defSize;
     }
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnCollection(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -130,5 +139,22 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable
             ChangeState(PlayerState.idle);
             _attackRenge.SetActive(false);
         }
+    }
+
+    public void OnBowAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isBowAttack = true;
+        }
+        else if (context.canceled)
+        {
+            isBowAttack = false;
+        }
+    }
+
+    public void Create()
+    {
+        _bulletFactory.GenerateBullet(_interactiveCursor.transform.position, _rotation.x);
     }
 }

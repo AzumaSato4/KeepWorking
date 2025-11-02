@@ -9,7 +9,6 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     [SerializeField] float _dexterity;
     [SerializeField] bool _isCoolTime;
     public float Strength => _strength;
-    public float CoolTime => _coolTime;
     public float Dexterity => _dexterity;
 
     private void Start()
@@ -38,7 +37,6 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     public void Attack(IDamageable target)
     {
         _isCoolTime = true;
-        Debug.Log("攻撃した！");
         target.TakeDamage(this);
         StartCoroutine(StartCoolTime());
     }

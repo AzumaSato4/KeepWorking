@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Home
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -13,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - Home
   - Player
   - Enemy
-  - Turret
+  - Bullet
   - TurretAttack
   - Sensor
   - EnemyAttack

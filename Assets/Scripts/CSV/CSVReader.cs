@@ -143,7 +143,7 @@ public class CSVReader : MonoBehaviour
     void ReadTurretData()
     {
         // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "TurretData.csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "BulletData.csv");
 
         // ファイルを読み込む
         if (File.Exists(filePath))
@@ -159,23 +159,22 @@ public class CSVReader : MonoBehaviour
 
                 string productName = values[0];
                 string turretType = values[1];
-                float maxHealth = float.Parse(values[2]);
-                float defense = float.Parse(values[3]);
+                float shotSpeed = float.Parse(values[2]);
+                float penetration = float.Parse(values[3]);
                 float strength = float.Parse(values[4]);
-                float coolTime = float.Parse(values[5]);
-                float dexterity = float.Parse(values[6]);
-                Debug.Log($"{productName},{turretType},{maxHealth},{defense},{strength},{coolTime},{dexterity}");
+                float dexterity = float.Parse(values[5]);
+                Debug.Log($"{productName},{turretType},{shotSpeed},{penetration},{strength},{dexterity}");
 
-                Turret.TurretType type = Turret.TurretType.bow;
+                Bullet.BulletType type = Bullet.BulletType.bow;
                 switch (turretType)
                 {
-                    case "goblin":
-                        type = Turret.TurretType.bow;
+                    case "bow":
+                        type = Bullet.BulletType.bow;
                         break;
                 }
 
                 CSVDataBase.turretStatus.Add(
-                    new TurretStatus(productName, type, maxHealth, defense, strength, coolTime, dexterity)
+                    new BulletStatus(productName, type, shotSpeed, penetration, strength, dexterity)
                     );
             }
         }

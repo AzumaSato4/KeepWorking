@@ -9,7 +9,6 @@ public class Goblin : Enemy
 
     public override void Attack(IDamageable target)
     {
-        Debug.Log("攻撃");
         target.TakeDamage(this);
         ChangeState(EnemyState.attack);
     }

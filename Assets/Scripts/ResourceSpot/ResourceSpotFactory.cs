@@ -28,11 +28,7 @@ public class ResourceSpotFactory : Factory
         do
         {
             rand = Random.Range(-_maxLeftSpown, _maxRightSpown);
-            if (rand == 0)
-            {
-                continue;
-            }
-            else if (rand < 0)
+            if (rand < -1)
             {
                 randSpot = Mathf.Abs(rand);
                 Debug.Log(randSpot);
@@ -42,7 +38,7 @@ public class ResourceSpotFactory : Factory
                     randLeftSpots[randSpot - 1] = true;
                 }
             }
-            else
+            else if (rand > 1)
             {
                 randSpot = rand;
                 if (!randRightSpots[randSpot - 1])
@@ -50,6 +46,10 @@ public class ResourceSpotFactory : Factory
                     isCheck = true;
                     randRightSpots[randSpot - 1] = true;
                 }
+            }
+            else
+            {
+                continue;
             }
         } while (!isCheck);
         Vector3 spownSpot = new Vector3(rand, 0, 0);

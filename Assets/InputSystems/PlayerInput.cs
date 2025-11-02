@@ -102,21 +102,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Collection"",
                     ""type"": ""Button"",
-                    ""id"": ""a874229f-a4a2-4df3-bf89-4ff240f361ef"",
+                    ""id"": ""63d919d4-1e13-4132-82a7-b4fdfdfc0a68"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Create"",
+                    ""name"": ""BowAttack"",
                     ""type"": ""Button"",
-                    ""id"": ""63d919d4-1e13-4132-82a7-b4fdfdfc0a68"",
+                    ""id"": ""a874229f-a4a2-4df3-bf89-4ff240f361ef"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -260,7 +260,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""BowAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -271,7 +271,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""BowAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -282,7 +282,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""BowAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -293,7 +293,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""BowAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -304,7 +304,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Create"",
+                    ""action"": ""Collection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -315,7 +315,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Create"",
+                    ""action"": ""Collection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -326,7 +326,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Create"",
+                    ""action"": ""Collection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -337,7 +337,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Create"",
+                    ""action"": ""Collection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -349,8 +349,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Create = m_Player.FindAction("Create", throwIfNotFound: true);
+        m_Player_Collection = m_Player.FindAction("Collection", throwIfNotFound: true);
+        m_Player_BowAttack = m_Player.FindAction("BowAttack", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -432,8 +432,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Create;
+    private readonly InputAction m_Player_Collection;
+    private readonly InputAction m_Player_BowAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -450,13 +450,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Move => m_Wrapper.m_Player_Move;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Attack".
+        /// Provides access to the underlying input action "Player/Collection".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Collection => m_Wrapper.m_Player_Collection;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Create".
+        /// Provides access to the underlying input action "Player/BowAttack".
         /// </summary>
-        public InputAction @Create => m_Wrapper.m_Player_Create;
+        public InputAction @BowAttack => m_Wrapper.m_Player_BowAttack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -486,12 +486,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Create.started += instance.OnCreate;
-            @Create.performed += instance.OnCreate;
-            @Create.canceled += instance.OnCreate;
+            @Collection.started += instance.OnCollection;
+            @Collection.performed += instance.OnCollection;
+            @Collection.canceled += instance.OnCollection;
+            @BowAttack.started += instance.OnBowAttack;
+            @BowAttack.performed += instance.OnBowAttack;
+            @BowAttack.canceled += instance.OnBowAttack;
         }
 
         /// <summary>
@@ -506,12 +506,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Create.started -= instance.OnCreate;
-            @Create.performed -= instance.OnCreate;
-            @Create.canceled -= instance.OnCreate;
+            @Collection.started -= instance.OnCollection;
+            @Collection.performed -= instance.OnCollection;
+            @Collection.canceled -= instance.OnCollection;
+            @BowAttack.started -= instance.OnBowAttack;
+            @BowAttack.performed -= instance.OnBowAttack;
+            @BowAttack.canceled -= instance.OnBowAttack;
         }
 
         /// <summary>
@@ -560,18 +560,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Collection" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
+        void OnCollection(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Create" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "BowAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCreate(InputAction.CallbackContext context);
+        void OnBowAttack(InputAction.CallbackContext context);
     }
 }

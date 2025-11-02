@@ -1,2 +1,2 @@
 Name,EnemyType,MoveSpeed,MaxHealth,Defense,Strength,CoolTime,Dexterity
-Goblin,goblin,1,1000,0,50,1,10
+Goblin,goblin,1,500,10,20,1,10

@@ -17,7 +17,6 @@ public interface IAttackable
 {
     float Strength { get; }
     float Dexterity { get; } //器用さ
-    float CoolTime { get; }
 
     void Attack(IDamageable target);
 }
@@ -54,4 +53,11 @@ public interface IProduct
     string ProductName { get; }
 
     void Initialize(int id);
+}
+
+public interface IPenetratable
+{
+    float Penetration { get; }
+
+    void Penetrate(IDamageable target);
 }

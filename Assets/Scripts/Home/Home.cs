@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Home : MonoBehaviour, IDamageable
 {
-    float _maxHealth = 100;
+    [SerializeField] float _maxHealth = 1000;
     float _health;
     float _defense = 0;
 
@@ -14,24 +14,20 @@ public class Home : MonoBehaviour, IDamageable
         _health = _maxHealth;
     }
 
-    private void Update()
-    {
-        if (_health <= 0)
-        {
-            _health = 0;
-            Dead();
-            return;
-        }
-    }
-
     public void Dead()
     {
         Debug.Log("ゲームオーバー");
+        Time.timeScale = 0;
     }
 
     public void TakeDamage(IAttackable attack)
     {
-        if (_health <= 0) return;
         _health -= Damage.GetDamage(attack, this);
+
+        if (_health <= 0)
+        {
+            _health = 0;
+            Dead();
+        }
     }
 }
