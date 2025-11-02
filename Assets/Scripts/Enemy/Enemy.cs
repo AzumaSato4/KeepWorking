@@ -23,7 +23,11 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
     [SerializeField] CircleCollider2D _attackRenge;
     [SerializeField] float _defSize = 5;
     Vector2 _rotation;
-    public Rigidbody2D Rbody => _rbody;
+    public Rigidbody2D Rbody
+    {
+        get { return _rbody; }
+        set { _rbody = value; }
+    }
     public Animator Animator => _animator;
     public float DefSize => _defSize;
     public Vector2 Rotation => _rotation;
@@ -132,6 +136,7 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
     {
         if (CurrentState == EnemyState.dead) return;
 
+        _rbody.linearVelocityX = 0;
         _health -= Damage.GetDamage(attack, this);
         Debug.Log($"{_productName},残りHP{_health}");
     }

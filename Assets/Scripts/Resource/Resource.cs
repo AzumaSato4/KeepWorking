@@ -10,8 +10,8 @@ public abstract class Resource : MonoBehaviour, IProduct
     }
 
     string _productName;
-    public string ProductName => _productName;
     ResourceType type;
+    public string ProductName => _productName;
     public ResourceType Type => type;
     public abstract void Initialize(int id);
 }

@@ -42,10 +42,7 @@ public interface ICreatable
 
 public interface IShotable
 {
-    float ShotSpeed { get; }
-    float ShotRotation { get; }
-
-    void Shot(GameObject bullet);
+    void Shot();
 }
 
 public interface IProduct
@@ -60,4 +57,11 @@ public interface IPenetratable
     float Penetration { get; }
 
     void Penetrate(IDamageable target);
+}
+
+public interface IExplodable
+{
+    float FuseDelay { get; }
+
+    void Explode();
 }

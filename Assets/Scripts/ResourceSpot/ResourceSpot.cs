@@ -18,6 +18,7 @@ public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable, IRest
     float _timer = 0; //攻撃されていない時間を計測
     float _recoverTime; //回復開始までの時間
     float _recoverPower; //回復量
+    int _amount; //入手できる資材量
     public string ProductName => _productName;
     public Resource.ResourceType SpotType => _spotType;
     public float Health => _health;
@@ -38,6 +39,7 @@ public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable, IRest
         _defense = _spotStatus.Defense;
         _recoverTime = _spotStatus.RecoverTime;
         _recoverPower = _spotStatus.RecoverPower;
+        _amount = _spotStatus.Amount;
     }
 
     private void Update()
@@ -46,12 +48,6 @@ public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable, IRest
 
         _slider.maxValue = _maxHealth;
         _slider.value = _health;
-
-        if (_health <= 0)
-        {
-            Dead();
-            return;
-        }
 
         _timer += Time.deltaTime;
         if (_health >= _maxHealth)
@@ -67,14 +63,6 @@ public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable, IRest
         {
             RestoreHealth();
         }
-    }
-
-    public void Dead()
-    {
-        isDead = true;
-        _animator.enabled = true;
-        _healthSlider.SetActive(false);
-        Destroy(gameObject, 1);
     }
 
     public void RestoreHealth()
@@ -94,5 +82,25 @@ public abstract class ResourceSpot : MonoBehaviour, IProduct, IDamageable, IRest
 
         _timer = 0;
         _health -= Damage.GetDamage(attack, this);
+
+        if (_health <= 0)
+        {
+            Dead();
+            return;
+        }
+    }
+
+    public void Dead()
+    {
+        isDead = true;
+        _animator.enabled = true;
+        _healthSlider.SetActive(false);
+        GetResource();
+        Destroy(gameObject, 1);
+    }
+
+    void GetResource()
+    {
+        GameManager.resourceManager.InPouch(_spotType, _amount);
     }
 }

@@ -31,7 +31,6 @@ public class ResourceSpotFactory : Factory
             if (rand < -1)
             {
                 randSpot = Mathf.Abs(rand);
-                Debug.Log(randSpot);
                 if (!randLeftSpots[randSpot - 1])
                 {
                     isCheck = true;

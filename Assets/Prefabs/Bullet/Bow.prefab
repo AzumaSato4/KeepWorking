@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4057795595807245450}
   - component: {fileID: 7235591265730007825}
   - component: {fileID: 2653820701815692250}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,4 +176,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rbody: {fileID: 4057795595807245450}
-  _defSize: 1
+  _defScale: 1

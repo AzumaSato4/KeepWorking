@@ -1,7 +1,8 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
+public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable, IShotable
 {
     public enum PlayerState
     {
@@ -12,7 +13,8 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
 
     PlayerState _currentState = PlayerState.idle;
 
-    [SerializeField] BulletFactory _bulletFactory;
+    [SerializeField] ArrowFactory _arrowFactory;
+    [SerializeField] BombFactory _bombFactory;
     [SerializeField] Rigidbody2D _rbody;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _attackRenge;
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
         if (isBowAttack && _timer >= _bowCoolTime)
         {
             _timer = 0;
-            Create();
+            Shot();
         }
         _timer += Time.deltaTime;
     }
@@ -132,6 +134,9 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
         if (context.started)
         {
             ChangeState(PlayerState.attack);
+        }
+        else if (context.performed)
+        {
             _attackRenge.SetActive(true);
         }
         else if (context.canceled)
@@ -153,8 +158,22 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable
         }
     }
 
+    public void OnCreate(InputAction.CallbackContext context)
+    {
+        if (GameManager.resourceManager.ResourcePouch.Any(x => x.Value > 0))
+        {
+            if (context.performed)
+                Create();
+        }
+    }
+
     public void Create()
     {
-        _bulletFactory.GenerateBullet(_interactiveCursor.transform.position, _rotation.x);
+        _bombFactory.GenerateBomb(_interactiveCursor.transform.position, _rotation.x);
+    }
+
+    public void Shot()
+    {
+        _arrowFactory.GenerateArrow(_interactiveCursor.transform.position, _rotation.x);
     }
 }

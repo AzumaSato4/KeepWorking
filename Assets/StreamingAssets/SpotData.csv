@@ -1,4 +1,4 @@
-Name,SpotType,MaxHealth,Defense,RecoverTime,RecoverPower
-Tree,wood,100,0,3,10
-Rock,stone,200,5,3,15
-Gold,gold,400,10,1.5,30
+Name,SpotType,MaxHealth,Defense,RecoverTime,RecoverPower,Amount
+Tree,wood,100,0,3,10,10
+Rock,stone,200,5,3,15,10
+Gold,gold,400,10,1.5,30,10

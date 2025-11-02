@@ -19,11 +19,11 @@ TagManager:
   - Player
   - Enemy
   - Bullet
-  - TurretAttack
+  - Spot
   - Sensor
   - EnemyAttack
   - Gate
-  - 
+  - BulletAttack
   - 
   - 
   - 
