@@ -1,0 +1,15 @@
+Category,Name,Type,Speed,MaxHealth,Defense,Strength,CoolTime,Penetration,Renge,RecoverTime,RecoverPower,Amount
+Player,Player,,3,,,50,1,,,,,
+Enemy,Goblin,goblin,1,500,10,20,1,,,,,
+Enemy,Skeleton,skeleton,1.5,250,0,10,0.5,,,,,
+Enemy,Bat,bat,1,160,20,20,1.5,,,,,
+Arrow,Bow,,20,,,20,,50,,,,
+Bomb,WoodBomb,wood,,,,100,,,2,,,
+Bomb,StoneBomb,stone,,,,255,,,4,,,
+Bomb,GoldBomb,gold,,,,510,,,8,,,
+Spot,Tree,wood,,150,0,,,,,3,10,10
+Spot,Rock,stone,,600,10,,,,,3,15,10
+Spot,Gold,gold,,750,20,,,,,1.5,30,10
+Resource,Tree,wood,,,,,,,,,,
+Resource,Rock,stone,,,,,,,,,,
+Resource,Gold,gold,,,,,,,,,,

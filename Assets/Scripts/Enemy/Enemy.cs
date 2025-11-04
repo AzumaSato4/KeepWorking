@@ -5,7 +5,8 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
     public enum EnemyType
     {
         goblin,
-        skelton
+        skeleton,
+        bat
     }
 
     public enum EnemyState
@@ -40,7 +41,6 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
     protected float _health;
     float _defense;
     float _strength;
-    float _dexterity;
     float _coolTime;
 
     public string ProductName => _productName;
@@ -49,7 +49,6 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
     public float Health => _health;
     public float Defense => _defense;
     public float Strength => _strength;
-    public float Dexterity => _dexterity;
     public float CoolTime => _coolTime;
 
     public void Initialize(int id)
@@ -63,7 +62,6 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
         _health = _maxHealth;
         _defense = _enemyStatus.Defense;
         _strength = _enemyStatus.Strength;
-        _dexterity = _enemyStatus.Dexterity;
         _coolTime = _enemyStatus.CoolTime;
 
         if (transform.position.x < 0)
@@ -87,7 +85,7 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
             return;
         }
 
-        if (CurrentState != EnemyState.attack)
+        if (CurrentState == EnemyState.move)
         {
             Move();
         }
@@ -146,5 +144,4 @@ public abstract class Enemy : MonoBehaviour, IProduct, ITurnable, IMovable, IAtt
         ChangeState(EnemyState.dead);
         Destroy(gameObject, 1);
     }
-
 }

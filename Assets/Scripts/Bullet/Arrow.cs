@@ -11,13 +11,11 @@ public class Arrow : MonoBehaviour, IProduct, IAttackable, IPenetratable
     float _shotSpeed;
     float _penetration;
     float _strength;
-    float _dexterity;
 
     public string ProductName => _productName;
     public float ShotSpeed => _shotSpeed;
     public float Penetration => _penetration;
     public float Strength => _strength;
-    public float Dexterity => _dexterity;
 
     public void Initialize(int id)
     {
@@ -27,7 +25,6 @@ public class Arrow : MonoBehaviour, IProduct, IAttackable, IPenetratable
         _shotSpeed = _arrowStatus.ShotSpeed;
         _penetration = _arrowStatus.Penetration;
         _strength = _arrowStatus.Strength;
-        _dexterity = _arrowStatus.Dexterity;
 
         _scaleX = transform.localScale.x;
         transform.localScale *= _defScale;

@@ -3,22 +3,34 @@ using UnityEngine;
 
 public class CSVReader : MonoBehaviour
 {
+    enum Header
+    {
+        category,
+        name,
+        type,
+        speed,
+        maxHealth,
+        defense,
+        strength,
+        coolTime,
+        penetration,
+        renge,
+        recoverTime,
+        recoverPower,
+        amount
+    }
+
     void Awake()
     {
-        ReadPlayerData();
-        ReadSpotData();
-        ReadEnemyData();
-        ReadArrowData();
-        ReadBombData();
-        ReadResourceData();
+        ReadData();
     }
 
-    void ReadPlayerData()
+    void ReadData()
     {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "PlayerData.csv");
+        //StreamingAssetsフォルダのCSVファイルパスを取得
+        string filePath = Path.Combine(Application.streamingAssetsPath, "GameData.csv");
 
-        // ファイルを読み込む
+        //ファイルを読み込む
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -26,69 +38,29 @@ public class CSVReader : MonoBehaviour
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string name = values[0];
-                float moveSpeed = float.Parse(values[1]);
-                float strength = float.Parse(values[2]);
-                float coolTime = float.Parse(values[3]);
-                float dexterity = float.Parse(values[4]);
-                Debug.Log($"{name},{moveSpeed},{strength},{coolTime},{dexterity}");
-
-                CSVDataBase.playerStatus = new PlayerStatus(moveSpeed, strength, coolTime, dexterity);
-            }
-        }
-        else
-        {
-            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
-        }
-    }
-
-    void ReadSpotData()
-    {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "SpotData.csv");
-
-        // ファイルを読み込む
-        if (File.Exists(filePath))
-        {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string productName = values[0];
-                string spotType = values[1];
-                float maxHealth = float.Parse(values[2]);
-                float defense = float.Parse(values[3]);
-                float recoverTime = float.Parse(values[4]);
-                float recoverPower = float.Parse(values[5]);
-                int amount = int.Parse(values[6]);
-                Debug.Log($"{productName},{spotType},{maxHealth},{defense},{recoverTime},{recoverPower},{amount}");
-
-                Resource.ResourceType type = Resource.ResourceType.wood;
-                switch (spotType)
+                //ヘッダーはスキップ
+                if (values[0] == "Category") continue;
+                switch (values[0])
                 {
-                    case "wood":
-                        type = Resource.ResourceType.wood;
+                    case "Player":
+                        ReadPlayerData(values);
                         break;
-                    case "stone":
-                        type = Resource.ResourceType.stone;
+                    case "Enemy":
+                        ReadEnemyData(values);
                         break;
-                    case "gold":
-                        type = Resource.ResourceType.gold;
+                    case "Arrow":
+                        ReadArrowData(values);
+                        break;
+                    case "Bomb":
+                        ReadBombData(values);
+                        break;
+                    case "Spot":
+                        ReadSpotData(values);
+                        break;
+                    case "Resource":
+                        ReadResourceData(values);
                         break;
                 }
-
-                CSVDataBase.spotStatus.Add(
-                    new SpotStatus(productName, type, maxHealth, defense, recoverTime, recoverPower, amount)
-                    );
             }
         }
         else
@@ -97,177 +69,138 @@ public class CSVReader : MonoBehaviour
         }
     }
 
-    void ReadEnemyData()
+    void ReadPlayerData(string[] values)
     {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "EnemyData.csv");
+        string name = values[(int)Header.name];
+        float moveSpeed = float.Parse(values[(int)Header.speed]);
+        float strength = float.Parse(values[(int)Header.strength]);
+        float coolTime = float.Parse(values[(int)Header.coolTime]);
+        Debug.Log($"{name},{moveSpeed},{strength},{coolTime}");
 
-        // ファイルを読み込む
-        if (File.Exists(filePath))
-        {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string productName = values[0];
-                string enemyType = values[1];
-                float moveSpeed = float.Parse(values[2]);
-                float maxHealth = float.Parse(values[3]);
-                float defense = float.Parse(values[4]);
-                float strength = float.Parse(values[5]);
-                float coolTime = float.Parse(values[6]);
-                float dexterity = float.Parse(values[7]);
-                Debug.Log($"{productName},{enemyType},{moveSpeed},{maxHealth},{defense},{strength},{coolTime},{dexterity}");
-
-                Enemy.EnemyType type = Enemy.EnemyType.goblin;
-                switch (enemyType)
-                {
-                    case "goblin":
-                        type = Enemy.EnemyType.goblin;
-                        break;
-                }
-
-                CSVDataBase.enemyStatus.Add(
-                    new EnemyStatus(productName, type, moveSpeed, maxHealth, defense, strength, coolTime, dexterity)
-                    );
-            }
-        }
-        else
-        {
-            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
-        }
+        CSVDataBase.playerStatus = new PlayerStatus(moveSpeed, strength, coolTime);
     }
 
-    void ReadArrowData()
+    void ReadEnemyData(string[] values)
     {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "ArrowData.csv");
+        string productName = values[(int)Header.name];
+        string enemyType = values[(int)Header.type];
+        float moveSpeed = float.Parse(values[(int)Header.speed]);
+        float maxHealth = float.Parse(values[(int)Header.maxHealth]);
+        float defense = float.Parse(values[(int)Header.defense]);
+        float strength = float.Parse(values[(int)Header.strength]);
+        float coolTime = float.Parse(values[(int)Header.coolTime]);
+        Debug.Log($"{productName},{enemyType},{moveSpeed},{maxHealth},{defense},{strength},{coolTime}");
 
-        // ファイルを読み込む
-        if (File.Exists(filePath))
+        Enemy.EnemyType type = Enemy.EnemyType.goblin;
+        switch (enemyType)
         {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string productName = values[0];
-                float shotSpeed = float.Parse(values[1]);
-                float penetration = float.Parse(values[2]);
-                float strength = float.Parse(values[3]);
-                float dexterity = float.Parse(values[4]);
-                Debug.Log($"{productName},{shotSpeed},{penetration},{strength},{dexterity}");
-
-                CSVDataBase.arrowStatus = new ArrowStatus(productName, shotSpeed, penetration, strength, dexterity);
-            }
+            case "goblin":
+                type = Enemy.EnemyType.goblin;
+                break;
+            case "skeleton":
+                type = Enemy.EnemyType.skeleton;
+                break;
+            case "bat":
+                type = Enemy.EnemyType.bat;
+                break;
         }
-        else
-        {
-            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
-        }
+
+        CSVDataBase.enemyStatus.Add(
+            new EnemyStatus(productName, type, moveSpeed, maxHealth, defense, strength, coolTime)
+            );
     }
 
-    void ReadBombData()
+
+    void ReadArrowData(string[] values)
     {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "BombData.csv");
+        string productName = values[(int)Header.name];
+        float shotSpeed = float.Parse(values[(int)Header.speed]);
+        float strength = float.Parse(values[(int)Header.strength]);
+        float penetration = float.Parse(values[(int)Header.penetration]);
+        Debug.Log($"{productName},{shotSpeed},{strength},{penetration}");
 
-        // ファイルを読み込む
-        if (File.Exists(filePath))
-        {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string productName = values[0];
-                string turretType = values[1];
-                float strength = float.Parse(values[2]);
-                float dexterity = float.Parse(values[3]);
-                float renge = float.Parse(values[4]);
-                Debug.Log($"{productName},{turretType},{strength},{dexterity},{renge}");
-
-                Bomb.BombType type = Bomb.BombType.wood;
-                switch (turretType)
-                {
-                    case "wood":
-                        type = Bomb.BombType.wood;
-                        break;
-                    case "stone":
-                        type = Bomb.BombType.stone;
-                        break;
-                    case "gold":
-                        type = Bomb.BombType.gold;
-                        break;
-                }
-
-                CSVDataBase.bombStatus.Add(
-                    new BombStatus(productName, type, strength, dexterity, renge)
-                    );
-            }
-        }
-        else
-        {
-            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
-        }
+        CSVDataBase.arrowStatus = new ArrowStatus(productName, shotSpeed, strength, penetration);
     }
 
-    void ReadResourceData()
+    void ReadBombData(string[] values)
     {
-        // StreamingAssetsフォルダのCSVファイルパスを取得
-        string filePath = Path.Combine(Application.streamingAssetsPath, "ResourceData.csv");
+        string productName = values[(int)Header.name];
+        string turretType = values[(int)Header.type];
+        float strength = float.Parse(values[(int)Header.strength]);
+        float renge = float.Parse(values[(int)Header.renge]);
+        Debug.Log($"{productName},{turretType},{strength},{renge}");
 
-        // ファイルを読み込む
-        if (File.Exists(filePath))
+        Bomb.BombType type = Bomb.BombType.wood;
+        switch (turretType)
         {
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-
-                // ヘッダー行（最初の行）はスキップ
-                if (values[0] == "Name") continue;
-
-                string productName = values[0];
-                string spotType = values[1];
-                Debug.Log($"{productName},{spotType}");
-
-                Resource.ResourceType type = Resource.ResourceType.wood;
-                switch (spotType)
-                {
-                    case "wood":
-                        type = Resource.ResourceType.wood;
-                        break;
-                    case "stone":
-                        type = Resource.ResourceType.stone;
-                        break;
-                    case "gold":
-                        type = Resource.ResourceType.gold;
-                        break;
-                }
-
-                CSVDataBase.resources.Add(
-                    new ResourceData(productName, type)
-                    );
-            }
+            case "wood":
+                type = Bomb.BombType.wood;
+                break;
+            case "stone":
+                type = Bomb.BombType.stone;
+                break;
+            case "gold":
+                type = Bomb.BombType.gold;
+                break;
         }
-        else
+
+        CSVDataBase.bombStatus.Add(
+            new BombStatus(productName, type, strength, renge)
+            );
+    }
+
+    void ReadSpotData(string[] values)
+    {
+        string productName = values[(int)Header.name];
+        string spotType = values[(int)Header.type];
+        float maxHealth = float.Parse(values[(int)Header.maxHealth]);
+        float defense = float.Parse(values[(int)Header.defense]);
+        float recoverTime = float.Parse(values[(int)Header.recoverTime]);
+        float recoverPower = float.Parse(values[(int)Header.recoverPower]);
+        int amount = int.Parse(values[(int)Header.amount]);
+        Debug.Log($"{productName},{spotType},{maxHealth},{defense},{recoverTime},{recoverPower},{amount}");
+
+        Resource.ResourceType type = Resource.ResourceType.wood;
+        switch (spotType)
         {
-            Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
+            case "wood":
+                type = Resource.ResourceType.wood;
+                break;
+            case "stone":
+                type = Resource.ResourceType.stone;
+                break;
+            case "gold":
+                type = Resource.ResourceType.gold;
+                break;
         }
+
+        CSVDataBase.spotStatus.Add(
+            new SpotStatus(productName, type, maxHealth, defense, recoverTime, recoverPower, amount)
+            );
+    }
+
+    void ReadResourceData(string[] values)
+    {
+        string productName = values[(int)Header.name];
+        string spotType = values[(int)Header.type];
+        Debug.Log($"{productName},{spotType}");
+
+        Resource.ResourceType type = Resource.ResourceType.wood;
+        switch (spotType)
+        {
+            case "wood":
+                type = Resource.ResourceType.wood;
+                break;
+            case "stone":
+                type = Resource.ResourceType.stone;
+                break;
+            case "gold":
+                type = Resource.ResourceType.gold;
+                break;
+        }
+
+        CSVDataBase.resources.Add(
+            new ResourceData(productName, type)
+            );
     }
 }

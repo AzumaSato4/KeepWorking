@@ -6,16 +6,13 @@ public class PlayerAttack : MonoBehaviour, IAttackable
     [SerializeField] CircleCollider2D _attackCollider;
     [SerializeField] float _strength;
     [SerializeField] float _coolTime;
-    [SerializeField] float _dexterity;
     [SerializeField] bool _isCoolTime;
     public float Strength => _strength;
-    public float Dexterity => _dexterity;
 
     private void Start()
     {
         _strength = CSVDataBase.playerStatus.Strength;
         _coolTime = CSVDataBase.playerStatus.CoolTime;
-        _dexterity = CSVDataBase.playerStatus.Dexterity;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

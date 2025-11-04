@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class Goblin : Enemy
+public class Skeleton : Enemy
 {
     public override void Move()
     {

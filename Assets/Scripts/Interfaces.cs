@@ -16,7 +16,6 @@ public interface ITurnable
 public interface IAttackable
 {
     float Strength { get; }
-    float Dexterity { get; } //器用さ
 
     void Attack(IDamageable target);
 }

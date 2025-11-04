@@ -11,5 +11,10 @@ public class Explosion : MonoBehaviour
         {
             bomb.Attack(enemy);
         }
+        ResourceSpot spot = collision.GetComponent<ResourceSpot>();
+        if (spot != null)
+        {
+            bomb.Attack(spot);
+        }
     }
 }

@@ -7,9 +7,8 @@ public class EnemyStatus
     public float Defense { get; } = 5; //防御力
     public float Strength { get; } = 10; //攻撃力
     public float CoolTime { get; } = 1; //攻撃クールタイム
-    public float Dexterity { get; } = 10; //器用さ
 
-    public EnemyStatus(string productName, Enemy.EnemyType enemyType, float moveSpeed, float maxHealth, float defense, float strength, float coolTime, float decterity)
+    public EnemyStatus(string productName, Enemy.EnemyType enemyType, float moveSpeed, float maxHealth, float defense, float strength, float coolTime)
     {
         ProductName = productName;
         EnemyType = enemyType;
@@ -18,6 +17,5 @@ public class EnemyStatus
         Defense = defense;
         Strength = strength;
         CoolTime = coolTime;
-        Dexterity = decterity;
     }
 }

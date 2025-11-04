@@ -18,14 +18,12 @@ public class Bomb : MonoBehaviour, IProduct, IAttackable, IExplodable
     string _productName;
     BombType _type;
     float _strength;
-    float _dexterity;
     float _renge;
     float _fuseDelay = 0.5f;
 
     public string ProductName => _productName;
     public BombType Type => _type;
     public float Strength => _strength;
-    public float Dexterity => _dexterity;
     public float Renge => _renge;
     public float FuseDelay => _fuseDelay;
 
@@ -36,7 +34,6 @@ public class Bomb : MonoBehaviour, IProduct, IAttackable, IExplodable
         _productName = _bombStatus.ProductName;
         _type = _bombStatus.BombType;
         _strength = _bombStatus.Strength;
-        _dexterity = _bombStatus.Dexterity;
         _renge = _bombStatus.Renge;
 
         transform.localScale *= _defScale;
