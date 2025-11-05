@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
@@ -25,12 +26,23 @@ public class CSVReader : MonoBehaviour
     void Awake()
     {
         if (isRead) return;
-        ReadData();
+        StartCoroutine(FindFile());
     }
 
-    void ReadData()
+    IEnumerator FindFile()
     {
-        isRead = true;
+#if UNITY_WEBGL
+        //StreamingAssetsフォルダのCSVファイルパスを取得
+        string path = Application.streamingAssetsPath + "/GameData.csv";
+        using (var request = UnityEngine.Networking.UnityWebRequest.Get(path))
+        {
+            yield return request.SendWebRequest();
+            if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+                ReadData(request.downloadHandler.text.Split('\n'));
+            else
+                Debug.LogError("CSV読み込み失敗: " + request.error);
+        }
+#else
         //StreamingAssetsフォルダのCSVファイルパスを取得
         string filePath = Path.Combine(Application.streamingAssetsPath, "GameData.csv");
 
@@ -38,38 +50,44 @@ public class CSVReader : MonoBehaviour
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
-
-            foreach (string line in lines)
-            {
-                string[] values = line.Split(',');
-                //ヘッダーはスキップ
-                if (values[0] == "Category") continue;
-                switch (values[0])
-                {
-                    case "Player":
-                        ReadPlayerData(values);
-                        break;
-                    case "Enemy":
-                        ReadEnemyData(values);
-                        break;
-                    case "Arrow":
-                        ReadArrowData(values);
-                        break;
-                    case "Bomb":
-                        ReadBombData(values);
-                        break;
-                    case "Spot":
-                        ReadSpotData(values);
-                        break;
-                    case "Resource":
-                        ReadResourceData(values);
-                        break;
-                }
-            }
+            ReadArrowData(lines);
         }
         else
         {
             Debug.LogError("CSVファイルが見つかりませんでした: " + filePath);
+        }
+#endif
+        isRead = true;
+    }
+
+    void ReadData(string[] lines)
+    {
+        foreach (string line in lines)
+        {
+            string[] values = line.Split(',');
+            //ヘッダーはスキップ
+            if (values[0] == "Category") continue;
+            switch (values[0])
+            {
+                case "Player":
+                    ReadPlayerData(values);
+                    break;
+                case "Enemy":
+                    ReadEnemyData(values);
+                    break;
+                case "Arrow":
+                    ReadArrowData(values);
+                    break;
+                case "Bomb":
+                    ReadBombData(values);
+                    break;
+                case "Spot":
+                    ReadSpotData(values);
+                    break;
+                case "Resource":
+                    ReadResourceData(values);
+                    break;
+            }
         }
     }
 
