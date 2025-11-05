@@ -9,6 +9,7 @@ public class EnemySpot : Factory
 
     private void Update()
     {
+        if (GameManager.currentState != GameManager.GameState.play) return;
         if (_timer >= _generateTimer)
         {
             _timer = 0;

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable, 
 
     PlayerState _currentState = PlayerState.idle;
 
+    [SerializeField] AudioSource _audioSource;
     [SerializeField] ArrowFactory _arrowFactory;
     [SerializeField] BombFactory _bombFactory;
     [SerializeField] Rigidbody2D _rbody;
@@ -32,18 +33,18 @@ public class PlayerController : MonoBehaviour, IMovable, ITurnable, ICreatable, 
     private void Start()
     {
         _moveSpeed = CSVDataBase.playerStatus.MoveSpeed;
-
-        //カーソルを非表示
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void Update()
     {
+        if (GameManager.currentState != GameManager.GameState.play) return;
+
         if (_currentState == PlayerState.attack)
         {
             _rbody.linearVelocityX = 0;
             PlayAnimation();
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
             return;
         }
 

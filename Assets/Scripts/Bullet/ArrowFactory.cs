@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ArrowFactory : Factory
 {
+    [SerializeField] AudioSource _audioSource;
     [SerializeField] Arrow _productPrefab;
     float _scale;
 
@@ -19,6 +20,7 @@ public class ArrowFactory : Factory
         Arrow newProduct = instance.GetComponent<Arrow>();
         // 各製品に独自のロジックが含まれる
         newProduct.Initialize(0);
+        _audioSource.Play();
         return newProduct;
     }
 }

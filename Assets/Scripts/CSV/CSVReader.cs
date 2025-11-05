@@ -20,13 +20,17 @@ public class CSVReader : MonoBehaviour
         amount
     }
 
+    static bool isRead;
+
     void Awake()
     {
+        if (isRead) return;
         ReadData();
     }
 
     void ReadData()
     {
+        isRead = true;
         //StreamingAssetsフォルダのCSVファイルパスを取得
         string filePath = Path.Combine(Application.streamingAssetsPath, "GameData.csv");
 

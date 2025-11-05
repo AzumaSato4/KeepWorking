@@ -10,6 +10,7 @@ public class Bomb : MonoBehaviour, IProduct, IAttackable, IExplodable
         gold
     }
 
+    [SerializeField] AudioSource _audioSource;
     [SerializeField] GameObject _efect;
     [SerializeField] Rigidbody2D _rbody;
     [SerializeField] float _defScale;
@@ -43,6 +44,7 @@ public class Bomb : MonoBehaviour, IProduct, IAttackable, IExplodable
 
     public void Attack(IDamageable target)
     {
+        _audioSource.Play();
         target.TakeDamage(this);
     }
 

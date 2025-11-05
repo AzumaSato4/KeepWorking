@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Home : MonoBehaviour, IDamageable
 {
+    [SerializeField] AudioSource _AudioSource;
     [SerializeField] float _maxHealth = 1000;
     float _health;
     float _defense = 0;
@@ -17,11 +18,15 @@ public class Home : MonoBehaviour, IDamageable
     public void Dead()
     {
         Debug.Log("ゲームオーバー");
-        Time.timeScale = 0;
     }
 
     public void TakeDamage(IAttackable attack)
     {
+        if (_health <= 0) return;
+        if (!_AudioSource.isPlaying)
+        {
+            _AudioSource.Play();
+        }
         _health -= Damage.GetDamage(attack, this);
 
         if (_health <= 0)
