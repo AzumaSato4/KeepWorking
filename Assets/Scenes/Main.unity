@@ -2811,6 +2811,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+      propertyPath: _boss
+      value: 
+      objectReference: {fileID: 153084427750772828, guid: a5f3b465cd35c65428b7a8c24ee9be94, type: 3}
+    - target: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
       propertyPath: _productPrefab.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3086,6 +3090,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1289869171}
   m_SourcePrefab: {fileID: 100100000, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+--- !u!114 &1322432008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+  m_PrefabInstance: {fileID: 1322432007}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289869167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caac3ebca447d2649a569f4d3a7f85a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1334611847 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3564026850829729314, guid: b51901e6748833e4695e0c1db509dcd4, type: 3}
@@ -3628,6 +3643,9 @@ MonoBehaviour:
   _UIManager: {fileID: 1523761536}
   _gameOverPanel: {fileID: 409739357}
   _home: {fileID: 2847977417221863962}
+  _enemySpots:
+  - {fileID: 7812483150469233822}
+  - {fileID: 1322432008}
   _timer: 300
 --- !u!4 &1454809786
 Transform:
@@ -11114,6 +11132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+      propertyPath: _boss
+      value: 
+      objectReference: {fileID: 153084427750772828, guid: a5f3b465cd35c65428b7a8c24ee9be94, type: 3}
+    - target: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
       propertyPath: _productPrefab.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -11441,6 +11463,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1874030592}
   m_SourcePrefab: {fileID: 100100000, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+--- !u!114 &7812483150469233822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 59942662066736462, guid: a3c7778a24fc80b49a2e6364b0839e62, type: 3}
+  m_PrefabInstance: {fileID: 7812483150469233821}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874030588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caac3ebca447d2649a569f4d3a7f85a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8488425200105863063
 Transform:
   m_ObjectHideFlags: 0

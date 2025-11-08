@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager _UIManager;
     [SerializeField] GameObject _gameOverPanel;
     [SerializeField] Home _home;
+    [SerializeField] EnemySpot[] _enemySpots;
     public static ResourceManager resourceManager;
 
     [SerializeField] float _timer = 300; //残り時間
     public float Timer => _timer;
+    bool _isGenerateBoss; //ボスを生成したかどうか
 
     private void Start()
     {
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         resourceManager = gameObject.AddComponent<ResourceManager>();
         resourceManager.Initialize();
         _UIManager.Initialize();
+        _isGenerateBoss = false;
 
         for (int i = 0; i < 30; i++)
         {
@@ -45,6 +48,15 @@ public class GameManager : MonoBehaviour
         if (_home.Health <= 0)
         {
             GameOver();
+        }
+
+        if (_timer <= 60 && !_isGenerateBoss)
+        {
+            _isGenerateBoss = true;
+            foreach (EnemySpot spot in _enemySpots)
+            {
+                spot.GetProductBoss();
+            }
         }
 
         if (_timer <= 0)

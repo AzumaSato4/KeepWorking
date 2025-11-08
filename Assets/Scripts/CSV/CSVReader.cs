@@ -4,23 +4,6 @@ using UnityEngine;
 
 public class CSVReader : MonoBehaviour
 {
-    enum Header
-    {
-        category,
-        name,
-        type,
-        speed,
-        maxHealth,
-        defense,
-        strength,
-        coolTime,
-        penetration,
-        renge,
-        recoverTime,
-        recoverPower,
-        amount
-    }
-
     static bool isRead;
 
     void Awake()
@@ -65,10 +48,10 @@ public class CSVReader : MonoBehaviour
         foreach (string line in lines)
         {
             string[] values = line.Split(',');
-            //ヘッダーはスキップ
-            if (values[0] == "Category") continue;
             switch (values[0])
             {
+                case "Category":
+                    continue;
                 case "Player":
                     ReadPlayerData(values);
                     break;
@@ -93,10 +76,10 @@ public class CSVReader : MonoBehaviour
 
     void ReadPlayerData(string[] values)
     {
-        string name = values[(int)Header.name];
-        float moveSpeed = float.Parse(values[(int)Header.speed]);
-        float strength = float.Parse(values[(int)Header.strength]);
-        float coolTime = float.Parse(values[(int)Header.coolTime]);
+        string name = values[1];
+        float moveSpeed = float.Parse(values[2]);
+        float strength = float.Parse(values[3]);
+        float coolTime = float.Parse(values[4]);
         Debug.Log($"{name},{moveSpeed},{strength},{coolTime}");
 
         CSVDataBase.playerStatus = new PlayerStatus(moveSpeed, strength, coolTime);
@@ -104,13 +87,13 @@ public class CSVReader : MonoBehaviour
 
     void ReadEnemyData(string[] values)
     {
-        string productName = values[(int)Header.name];
-        string enemyType = values[(int)Header.type];
-        float moveSpeed = float.Parse(values[(int)Header.speed]);
-        float maxHealth = float.Parse(values[(int)Header.maxHealth]);
-        float defense = float.Parse(values[(int)Header.defense]);
-        float strength = float.Parse(values[(int)Header.strength]);
-        float coolTime = float.Parse(values[(int)Header.coolTime]);
+        string productName = values[1];
+        string enemyType = values[2];
+        float moveSpeed = float.Parse(values[3]);
+        float maxHealth = float.Parse(values[4]);
+        float defense = float.Parse(values[5]);
+        float strength = float.Parse(values[6]);
+        float coolTime = float.Parse(values[7]);
         Debug.Log($"{productName},{enemyType},{moveSpeed},{maxHealth},{defense},{strength},{coolTime}");
 
         Enemy.EnemyType type = Enemy.EnemyType.goblin;
@@ -135,10 +118,10 @@ public class CSVReader : MonoBehaviour
 
     void ReadArrowData(string[] values)
     {
-        string productName = values[(int)Header.name];
-        float shotSpeed = float.Parse(values[(int)Header.speed]);
-        float strength = float.Parse(values[(int)Header.strength]);
-        float penetration = float.Parse(values[(int)Header.penetration]);
+        string productName = values[1];
+        float shotSpeed = float.Parse(values[2]);
+        float strength = float.Parse(values[3]);
+        float penetration = float.Parse(values[4]);
         Debug.Log($"{productName},{shotSpeed},{strength},{penetration}");
 
         CSVDataBase.arrowStatus = new ArrowStatus(productName, shotSpeed, strength, penetration);
@@ -146,10 +129,10 @@ public class CSVReader : MonoBehaviour
 
     void ReadBombData(string[] values)
     {
-        string productName = values[(int)Header.name];
-        string turretType = values[(int)Header.type];
-        float strength = float.Parse(values[(int)Header.strength]);
-        float renge = float.Parse(values[(int)Header.renge]);
+        string productName = values[1];
+        string turretType = values[2];
+        float strength = float.Parse(values[3]);
+        float renge = float.Parse(values[4]);
         Debug.Log($"{productName},{turretType},{strength},{renge}");
 
         Bomb.BombType type = Bomb.BombType.wood;
@@ -173,13 +156,13 @@ public class CSVReader : MonoBehaviour
 
     void ReadSpotData(string[] values)
     {
-        string productName = values[(int)Header.name];
-        string spotType = values[(int)Header.type];
-        float maxHealth = float.Parse(values[(int)Header.maxHealth]);
-        float defense = float.Parse(values[(int)Header.defense]);
-        float recoverTime = float.Parse(values[(int)Header.recoverTime]);
-        float recoverPower = float.Parse(values[(int)Header.recoverPower]);
-        int amount = int.Parse(values[(int)Header.amount]);
+        string productName = values[1];
+        string spotType = values[2];
+        float maxHealth = float.Parse(values[3]);
+        float defense = float.Parse(values[4]);
+        float recoverTime = float.Parse(values[5]);
+        float recoverPower = float.Parse(values[6]);
+        int amount = int.Parse(values[7]);
         Debug.Log($"{productName},{spotType},{maxHealth},{defense},{recoverTime},{recoverPower},{amount}");
 
         Resource.ResourceType type = Resource.ResourceType.wood;
@@ -203,8 +186,8 @@ public class CSVReader : MonoBehaviour
 
     void ReadResourceData(string[] values)
     {
-        string productName = values[(int)Header.name];
-        string spotType = values[(int)Header.type];
+        string productName = values[1];
+        string spotType = values[2];
         Debug.Log($"{productName},{spotType}");
 
         Resource.ResourceType type = Resource.ResourceType.wood;

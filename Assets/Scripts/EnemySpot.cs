@@ -3,8 +3,10 @@ using UnityEngine;
 public class EnemySpot : Factory
 {
     [SerializeField] Enemy[] _productPrefab;
+    [SerializeField] Enemy _boss;
     [SerializeField] AnimationCurve _generateTime; //生成間隔
     float _generateTimer; //生成間隔
+
     float _timer;
 
     private void Update()
@@ -29,6 +31,18 @@ public class EnemySpot : Factory
         Enemy newProduct = instance.GetComponent<Enemy>();
         // 各製品に独自のロジックが含まれる
         newProduct.Initialize(rand);
+        return newProduct;
+    }
+
+    public IProduct GetProductBoss()
+    {
+        Vector3 position = new Vector3(transform.position.x, 4, 0);
+        // プレハブインスタンスを作成して製品コンポーネントを取得する
+        GameObject instance = Instantiate(_boss.gameObject,
+       position, Quaternion.identity);
+        Enemy newProduct = instance.GetComponent<Enemy>();
+        // 各製品に独自のロジックが含まれる
+        newProduct.Initialize(3);
         return newProduct;
     }
 }
