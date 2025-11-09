@@ -34,7 +34,7 @@
 CSVファイルを使用したパラメーター調整  
 アニメーションカーブを使用した敵の出現間隔調整  
 InputSystemを使用した入力制御  
-- 技術的な調整：
+- 技術的な調整：  
 CSVファイルをゲーム内に取り込めるように設計し、その情報をキャラに代入するのに苦労しました。
 
 ### スクリプトの詳細
@@ -338,7 +338,34 @@ public interface IExplodable
 }
 ```
 
+- アニメーションカーブを使用した難易度調整  
+敵の出現間隔の変数の値をアニメーションカーブを使って変化させた
+![アニメーションカーブ](/Readme/keepworking_animationcurve.png)
+
+```c#
+public class EnemySpot : Factory
+{
+    [SerializeField] Enemy[] _productPrefab;
+    [SerializeField] Enemy _boss;
+    [SerializeField] AnimationCurve _generateTime; //生成間隔
+    float _generateTimer; //生成間隔
+
+    float _timer;
+
+    private void Update()
+    {
+        if (GameManager.currentState != GameManager.GameState.play) return;
+        if (_timer >= _generateTimer)
+        {
+            _timer = 0;
+            GetProduct(transform.position);
+        }
+
+        _timer += Time.deltaTime;
+        _generateTimer = _generateTime.Evaluate(Time.time);
+    }
+```
 
 ## 今後の展望  
-- 自動走行してPlayerを追いかける敵をNavMeshAgentなどの技術でつくれるようにする
-- オプションメニューを用意して、難易度を変えたりカメラの微調整ができるような仕組みをつくれるように学習中
+- どの爆弾を使用するかを選択できるようにする
+- CSVデータをスクリプタブルオブジェクトに代入できるように学習中
